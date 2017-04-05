@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Date</title>
+    <meta charset="UTF-8">
+    <link href='//fonts.googleapis.com/css?family=Bungee Inline' rel='stylesheet'>
+    <link href='//fonts.googleapis.com/css?family=Caesar Dressing' rel='stylesheet'>
+    <link href='//fonts.googleapis.com/css?family=Petit Formal Script' rel='stylesheet'>
+    <link type = "text/css" rel="stylesheet" href="m3.css">
+</head>
+<body>
+<h1 id="h1"></h1>
+<strong id=nombre>Mi nombre es: Víctor García Rubio</strong>
+<div id = "box">
+    <h2 id="h2">La fecha y la hora son:</h2>
+    <div id="fecha"></div>
+</div>
+<p id="innerh2"></p>
+<p id="outerh1"></p>
+<p id="locationhref"></p>
+<p id="location"></p>
+<p id="width"></p>
+<p id="height"></p>
+
+<script type="text/javascript">
+    var fecha = new Date();
+    var msj;
+    if (fecha.getHours() < 7) {
+        msj = "Buenas noches";
+    }
+    else if (fecha.getHours() < 12) {
+        msj = "Buenos días";
+    }
+    else if (fecha.getHours() < 21) {
+        msj = "Buenas tardes";
+    }
+    else {
+        msj = "Buenas noches";
+    }
+    document.getElementById("h1").innerHTML = msj;
+    document.getElementById("fecha").innerHTML = fecha;
+    document.getElementById("innerh2").innerHTML = "El contenido de h2 es: "+document.getElementById("h2").innerHTML;
+    document.getElementById("outerh1").innerHTML= "El outer de h1 es: "+(document.getElementById("h1")).outerHTML;
+    document.getElementById("locationhref").innerHTML = "The location of this file is: " + location;
+    document.getElementById("location").innerHTML = "The location ref is: " + location.href;
+    document.getElementById("width").innerHTML = "The width of my screen is: " + screen.width;
+    document.getElementById("height").innerHTML = "The height of my screen is: " + screen.height;
+</script>
+</body>
+</html>

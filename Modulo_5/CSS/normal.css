@@ -1,0 +1,108 @@
+header{
+    font-size: 1.2em;
+    font-family: "Comic Sans MS";
+    padding-left: 2em;
+    padding-top: 2em;
+    color:white;
+
+}
+#numero{
+    font-size: 1.2em;
+    font-family: "Comic Sans MS";
+    color:white;
+    padding-left: 2em;
+    padding-bottom: 2em;
+    padding-top: 2em;
+}
+button {
+    border-radius: 1em;
+    width: 9em;
+    height: 3em;
+    font-family: "Comic Sans MS";
+    font-size:1em;
+    color:white;
+    border-width: 0.3em;
+
+}
+#pantalla{
+    font-family: "Comic Sans MS";
+    border-width: 0.3em;
+    border-radius: 0.5em;
+    border-color:white;
+}
+body{
+    background-color: midnightblue;
+}
+
+#suma {
+    background-color: #0D6FFF;
+    border-color: white;
+    color:white;
+    margin-bottom: 0.5em;
+    margin-left: 2em;
+}
+
+#resta {
+    background-color: #0C9FE8;
+    border-color: white;
+    margin-bottom: 0.5em;
+}
+
+#igual {
+    background-color: #00EDFF;
+    border-color: white;
+    margin-bottom: 0.5em;
+
+}
+
+#cuadrado {
+    background-color: #0CE8BA;
+    border-color: white;
+    margin-bottom: 0.5em;
+}
+
+#inverso {
+    background-color: #0DFF88;
+    border-color: white;
+    margin-bottom: 0.5em;
+
+}
+
+#raiz {
+    background-color: #0DFF44;
+    border-color: white;
+    margin-left: 2em;
+
+}
+
+#pentera {
+    background-color: #1BE80C;
+    border-color: white;
+
+}
+
+#potencia2 {
+    background-color: #6FFF00;
+    border-color: white;
+}
+
+#factorial {
+    background-color: #B8E80C;
+    border-color: white;
+}
+
+#sumatorio{
+    background-color: darkorange;
+    border-color: white;
+}
+#productorio{
+    background-color: orange;
+    border-color: white;
+}
+#limpiar{
+    background-color: silver;
+    border-color: black;
+    color:black;
+}
+
+

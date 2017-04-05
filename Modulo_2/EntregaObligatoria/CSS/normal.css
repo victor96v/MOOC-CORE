@@ -1,0 +1,44 @@
+body{
+    background-color: pink;
+}
+
+#bonita{
+    font-family: 'Sofia';font-size: 16px;
+}
+#SOA{
+    font-family: 'Sancreek';font-size: 16px;
+}
+#faster{
+    font-family: 'Faster One';font-size: 16px;
+}
+#winner{
+    font-family: "Luckiest Guy";font-size: 16px;
+}
+#imagenes{
+
+    display: flex;
+    flex-wrap: wrap;
+    height: 30em;
+
+}
+#marco{
+    background: #eee;
+    border: 1.5em solid transparent;
+    -moz-border-image: -moz-linear-gradient(left, #3acfd5 0%, #3a4ed5 100%);
+    -webkit-border-image: -webkit-linear-gradient(left, #3acfd5 0%, #3a4ed5 100%);
+    border-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
+    border-image-slice: 1;
+}
+#videobox1{
+    border: 1.5em solid red;
+    border-radius: 1.5em;
+    margin-left: 7em;
+}
+#video{
+    display: flex;
+    flex-wrap: wrap;
+}
+#videobox2{
+    border: 1.5em solid yellow;
+    border-radius: 1.5em;
+}
