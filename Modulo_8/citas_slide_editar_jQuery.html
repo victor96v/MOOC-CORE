@@ -7,102 +7,114 @@
 
     <script type="text/javascript" src="javascript/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="javascript/galeria.js"></script>
+    <!--Añadir a la aplicación, con el el carrusel de citas editable, la funcionalidad de guardar la base de datos-->
+    <!--serializada en JSON en localStorage, de forma que al cargar la aplicación en un navegador, está deberá detectar si-->
+    <!--existe una base de datos de citas almacenada en localStorage y si es así deberá presentar está en vez de las citas-->
+    <!--de la galería incluidas en el código de la aplicación.-->
 
+    <!--De esta forma los cambios realizados a la base de datos inicial de citas (edición, añadir o borrado) quedarán-->
+    <!--guardados en localStorage y estarán disponibles cuando se vuelva a abrir la aplicación en ese mismo navegador.-->
+
+    <!--Añadir además un botón que regenere las citas iniciales de la aplicación, eliminando los cambios introducidos. El-->
+    <!--botón debe pedir confirmación (con la funcion confirm("msj") o con un componente/widget dialogo de jQuery UI) y-->
+    <!--avisar en el mensaje ("msj") del pop-up de lo que va a hacer, para que el usuario sea consciente de que borra todos-->
+    <!--los cambios.-->
+
+    <!--Este nuevo botón deberá colocarse en una posición que se relacione con la base de datos de citas y no con una cita-->
+    <!--en particular. Buscar un icono SVG adecuado en Internet.-->
     <script>
+        //Guardar la base de datos serializada JSON en LocalStorage.
+        //Al cargar la aplicación, se debe cargar la base de datos en lugar de
+        //las citas iniciales de la aplicacion.
         var t, actual;
-
-        function select(i) {
-            actual = i;
-
-            $("nav a")
-                .removeClass("on off")
-                .addClass(function (j) {
-                    return (j === i) ? "on" : "off";
-                });
-
-            $("#persona").html(galeria[i].persona);
-            $("#frase").html(galeria[i].frase);
-            $("#foto").attr("src", galeria[i].foto);
-
-            clearTimeout(t);
-            t = setTimeout(function () {
-                select((i + 1) % galeria.length);
-            }, 2000);
-        }
-
-        function generar_selector() { // regenera la botonera
-            var selector = $("#selector");
-
-            selector.html("");
-
-            galeria.forEach(function (elem, i) {
-                selector.append("<li><a onClick='select(" + i + ")'></a></li>");
-            });
-        }
-
         $(function () {
-            generar_selector();
 
-            $("#editar").on("click", function () {
+            var galeriaString = JSON.stringify(galeria);
+            localStorage.db = (localStorage.db || galeriaString); // inicialización/carga de almacen});
+            var galeriaObject = JSON.parse(localStorage.db);
+            function select(i) {
+                actual = i;
+
+                $("nav a")
+                    .removeClass("on off")
+                    .addClass(function (j) {
+                        return (j === i) ? "on" : "off";
+                    });
+
+                $("#persona").html(galeriaObject[i].persona);
+                $("#frase").html(galeriaObject[i].frase);
+                $("#foto").attr("src", galeriaObject[i].foto);
+
                 clearTimeout(t);
+                t = setTimeout(function () {
+                    select((i + 1) % galeriaObject.length);
+                }, 2000);
+            }
 
-                $("#persona_d").html(galeria[actual].persona);
-                $("#frase_d").html(galeria[actual].frase);
-                $("#foto_d").html(galeria[actual].foto);
+            function generar_selector() { // regenera la botonera
+                var selector = $("#selector");
 
-                $("#datos").css("display", "block");
-            })
+                selector.html("");
 
-            $("#nuevo").on("click", function () {
-                $("#datos").css("display", "none");
+                galeriaObject.forEach(function (elem, i) {
+                    selector.append("<li><a onClick='select(" + i + ")'></a></li>");
+                });
+            }
 
-                actual = galeria.push({
+
+                generar_selector();
+
+                $("#editar").on("click", function () {
+                    clearTimeout(t);
+
+                    $("#persona_d").html(galeriaObject[actual].persona);
+                    $("#frase_d").html(galeriaObject[actual].frase);
+                    $("#foto_d").html(galeriaObject[actual].foto);
+
+                    $("#datos").css("display", "block");
+                })
+
+                $("#nuevo").on("click", function () {
+                    $("#datos").css("display", "none");
+
+                    actual = galeriaObject.push({
+                            persona: $("#persona_d").html(),
+                            frase: $("#frase_d").html(),
+                            foto: $("#foto_d").html()
+                        }) - 1;
+
+                    generar_selector();
+
+                    select(actual);
+                })
+
+                $("#guardar").on("click", function () {
+                    $("#datos").css("display", "none");
+                    galeriaObject.splice(actual, 0, {
                         persona: $("#persona_d").html(),
                         frase: $("#frase_d").html(),
                         foto: $("#foto_d").html()
-                    }) - 1;
-
-                generar_selector();
-
-                select(actual);
-            })
-
-            $("#guardar").on("click", function () {
-                $("#datos").css("display", "none");
-                //Seleccionamos los valores obtenidos tras la edicion
-                //Es decir, el contenido de los inputs
-                //Actualizamos la diapositiva
-                //Metemos el nuevo elemento
-                galeria.splice(actual,0, {
-                    persona: $("#persona_d").html(),
-                    frase: $("#frase_d").html(),
-                    foto: $("#foto_d").html()
-                });
-                //Borramos la versión anterior.
-               galeria.splice((actual + 1), 1);
+                    });
+                    //Borramos la versión anterior.
+                    galeriaObject.splice((actual + 1), 1);
 
 
-                generar_selector();
+                    generar_selector();
 
-                select(actual);
-            })
-            $("#borrar").on("click", function () {
-                $("#datos").css("display", "none");
-//        actual = galeria.indexOf({
-//                persona:$("#persona_d").html(),
-//                frase:$("#frase_d").html(),
-//                foto:$("#foto_d").html()
-//            });
-                galeria.splice(actual, 1);
+                    select(actual);
+                })
+                $("#borrar").on("click", function () {
+                    $("#datos").css("display", "none");
+                    galeriaObject.splice(actual, 1);
 
-                generar_selector();
+                    generar_selector();
 
-                select(actual - 1);
-            })
+                    select(actual - 1);
+                })
 
 
-            select(0);
-        });
+                select(0);
+            });
     </script>
 </head>
 
