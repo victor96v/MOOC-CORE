@@ -2,16 +2,57 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GMaps.js &mdash; Geolocation</title>
+  <title>Modulo 9 &mdash; Geolocation</title>
   <script type="text/javascript" src="zepto.min.js"></script>
   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
   <script type="text/javascript" src="gmaps.js"></script>
   <link rel="stylesheet" type="text/css" href="mypath.css" />
   <script type="text/javascript">
     var map, lat, lng;
-
+     var latIni, lngIni;
+    
+    //Boton de compactar: elimina los puntos intermedios de la ruta
+    //Visualizamos los puntos inicial y final y la ruta DIRECTA que los une.
+    //Al pulsar: limpiar mapa > creamos marcadores inicial y final > ruta directa.
+    
+      // guarda latitud inicial
+      // guarda longitud inicial
+ 
     $(function(){
-
+        function almacenaOrigen(){
+            alert("almacenando");
+            GMaps.geolocate({
+                success: function(position){
+              // guardamos las posiciones iniciales
+                latIni = position.coords.latitude;
+                lngIni = position.coords.longitude;
+                },
+                error: function(error) { alert('Geolocalización falla: '+error.message); },
+                not_supported: function(){ alert("Su navegador no soporta geolocalización"); },
+            });
+        };
+        // Pulsamos en compactar
+        $(".btn").on("click", function () {  
+            // Creamos el mapa centrado en las coordenadas iniciales
+            map = new GMaps ({
+                el:'#map',
+                lat: latIni,
+                lng: lngIni,
+            })
+            // Dibujamos la nueva ruta
+            map.drawRoute({
+                origin:[latIni,lngIni],
+                destination:[lat, lng],
+                travelMode: 'driving',
+                strokeColor: '#FF530D',
+                strokeOpacity: 0.6,
+                strokeWeight: 5
+            });
+            // Añadimos los marcadores
+            map.addMarker({ lat: latIni, lng: lngIni}); 
+            map.addMarker({ lat: lat, lng: lng}); 
+                    });
+                
       function enlazarMarcador(e){
 
        // muestra ruta entre marcas anteriores y actuales
@@ -50,14 +91,17 @@
           not_supported: function(){ alert("Su navegador no soporta geolocalización"); },
         });
       };
-
+      window.onload = almacenaOrigen;
       geolocalizar();
+        
     });
   </script>
 </head>
 <body>
-  <h1>Geolocalización</h1>
-
+    <h1>Geolocalización
+      <span><button class="btn" id="compact">Compact</button></span>
+    </h1>
+    
   <div id="map"></div>
 </body>
 </html>

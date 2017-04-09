@@ -1,7 +1,9 @@
 body{
   font-family: 'Droid Sans', 'Helvetica', Arial, sans-serif;
 }
-
+.btn{
+    margin-bottom:30px;
+}
 #latlng{
   display: block;
   margin: 0;
@@ -18,7 +20,7 @@ body{
   margin: 0;
   padding: 0;
   position: absolute; /* posición absoluta a navegador */
-  top: 50px;      /* 50px debajo de borde de navegador */
+  top: 56px;      /* 50px debajo de borde de navegador */
   left: 0;        /* ajusta a borde de navegador */
   right: 0;
   bottom: 0;
