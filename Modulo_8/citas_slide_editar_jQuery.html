@@ -2,26 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>CITAS</title>
+    <title>CITAS M8</title>
     <link rel="stylesheet" type="text/css" href="css/citas_slide.css"/>
 
     <script type="text/javascript" src="javascript/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="javascript/galeria.js"></script>
-    <!--Añadir a la aplicación, con el el carrusel de citas editable, la funcionalidad de guardar la base de datos-->
-    <!--serializada en JSON en localStorage, de forma que al cargar la aplicación en un navegador, está deberá detectar si-->
-    <!--existe una base de datos de citas almacenada en localStorage y si es así deberá presentar está en vez de las citas-->
-    <!--de la galería incluidas en el código de la aplicación.-->
-
-    <!--De esta forma los cambios realizados a la base de datos inicial de citas (edición, añadir o borrado) quedarán-->
-    <!--guardados en localStorage y estarán disponibles cuando se vuelva a abrir la aplicación en ese mismo navegador.-->
-
-    <!--Añadir además un botón que regenere las citas iniciales de la aplicación, eliminando los cambios introducidos. El-->
-    <!--botón debe pedir confirmación (con la funcion confirm("msj") o con un componente/widget dialogo de jQuery UI) y-->
-    <!--avisar en el mensaje ("msj") del pop-up de lo que va a hacer, para que el usuario sea consciente de que borra todos-->
-    <!--los cambios.-->
-
-    <!--Este nuevo botón deberá colocarse en una posición que se relacione con la base de datos de citas y no con una cita-->
-    <!--en particular. Buscar un icono SVG adecuado en Internet.-->
     <script>
         //Guardar la base de datos serializada JSON en LocalStorage.
         //Al cargar la aplicación, se debe cargar la base de datos en lugar de
@@ -42,7 +27,7 @@
 
             $("#persona").html(galeriaObject[i].persona);
             $("#frase").html(galeriaObject[i].frase);
-            $("#foto").attr("src", galeriaObject[i].foto);
+            $("#foto").attr('src', galeriaObject[i].foto);
 
             clearTimeout(t);
             t = setTimeout(function () {
@@ -60,58 +45,81 @@
             });
         }
 
-        $(function () {
 
-            generar_selector();
+            $(function () {
 
-            $("#reset").on("click", function () {
-                confirm("Press OK to reset the carrousel!");
-            })
+                generar_selector();
 
-            $("#nuevo").on("click", function () {
-                $("#datos").css("display", "none");
+                $(".btn").on("click", function () {
+                    var r = confirm("Si haces click en OK borrarás todos los cambios.\nEstás seguro?");
+                    if (r === true) {
+                        localStorage.db = galeriaString;
+                        galeriaObject = galeria;
+                        //$("#resultreset").html("Carrusel reseteado");
+                        window.location.reload();
+                    } else {
+                        //$("#resultreset").html("Cambios conservados");
+                        window.location.reload();
+                    }
+                })
 
-                actual = galeriaObject.push({
+                $("#editar").on("click", function () {
+                    clearTimeout(t);
+
+                    $("#persona_d").html(galeriaObject[actual].persona);
+                    $("#frase_d").html(galeriaObject[actual].frase);
+                    $("#foto_d").html(galeriaObject[actual].foto);
+
+                    $("#datos").css("display", "block");
+                })
+
+                $("#nuevo").on("click", function () {
+                    $("#datos").css("display", "none");
+
+                    actual = galeriaObject.push({
+                            persona: $("#persona_d").html(),
+                            frase: $("#frase_d").html(),
+                            foto: $("#foto_d").html()
+                        }) - 1;
+
+                    generar_selector();
+
+                    select(actual);
+                    localStorage.db = JSON.stringify(galeriaObject);
+                })
+
+                $("#guardar").on("click", function () {
+                    $("#datos").css("display", "none");
+                    galeriaObject.splice(actual, 0, {
                         persona: $("#persona_d").html(),
                         frase: $("#frase_d").html(),
                         foto: $("#foto_d").html()
-                    }) - 1;
-
-                generar_selector();
-
-                select(actual);
-                localStorage.db = JSON.stringify(galeriaObject);
-            })
-
-            $("#guardar").on("click", function () {
-                $("#datos").css("display", "none");
-                galeriaObject.splice(actual, 0, {
-                    persona: $("#persona_d").html(),
-                    frase: $("#frase_d").html(),
-                    foto: $("#foto_d").html()
-                });
-                //Borramos la versión anterior.
-                galeriaObject.splice((actual + 1), 1);
+                    });
+                    //Borramos la versión anterior.
+                    galeriaObject.splice((actual + 1), 1);
 
 
-                generar_selector();
+                    generar_selector();
 
-                select(actual);
-                localStorage.db = JSON.stringify(galeriaObject);
-            })
-            $("#borrar").on("click", function () {
-                $("#datos").css("display", "none");
-                galeriaObject.splice(actual, 1);
+                    select(actual);
+                    localStorage.db = JSON.stringify(galeriaObject);
+                })
+                $("#borrar").on("click", function () {
+                    $("#datos").css("display", "none");
+                    galeriaObject.splice(actual, 1);
 
-                generar_selector();
+                    generar_selector();
 
-                select(actual - 1);
-                localStorage.db = JSON.stringify(galeriaObject);
-            })
+                    select(actual - 1);
+                    localStorage.db = JSON.stringify(galeriaObject);
+                })
 
 
-            select(0);
-        });
+                select(0);
+            });
+
+
+
     </script>
 </head>
 
@@ -128,7 +136,8 @@
         </div>
     </section>
     <div class="reset">
-        <button id="reset">RESET</button>
+        <button class="btn">RESET</button>
+       <!-- <span id = resultreset></span> -->
     </div>
     <div class="editar" id="editar">
         <img src="images/carat-d-white.svg" alt=""/>

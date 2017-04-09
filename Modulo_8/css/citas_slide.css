@@ -89,11 +89,36 @@ nav a:hover {
 	cursor:pointer;
 }
 .reset {
-	background-color: green;
+	background-color: #626262;
 	padding: 0.2em;
-	text-align: right;
-	height:28px;
-	cursor:pointer;
+	text-align: center;
+
+}
+.btn {
+	background: #d4d4d4;
+	background-image: -webkit-linear-gradient(top, #d4d4d4, #6f7070);
+	background-image: -moz-linear-gradient(top, #d4d4d4, #6f7070);
+	background-image: -ms-linear-gradient(top, #d4d4d4, #6f7070);
+	background-image: -o-linear-gradient(top, #d4d4d4, #6f7070);
+	background-image: linear-gradient(to bottom, #d4d4d4, #6f7070);
+	-webkit-border-radius: 28px;
+	-moz-border-radius: 28px;
+	border-radius: 28px;
+	font-family: Arial;
+	color: #000000;
+	font-size: 14px;
+	padding: 10px 20px 10px 20px;
+	text-decoration: none;
+}
+
+.btn:hover {
+	background: #3cb0fd;
+	background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+	background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+	background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+	background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+	background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+	text-decoration: none;
 }
 .editar img {
 	padding: 6px;
