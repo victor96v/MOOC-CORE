@@ -88,6 +88,13 @@ nav a:hover {
 	height:28px;
 	cursor:pointer;
 }
+.reset {
+	background-color: green;
+	padding: 0.2em;
+	text-align: right;
+	height:28px;
+	cursor:pointer;
+}
 .editar img {
 	padding: 6px;
 	border-radius:50%;

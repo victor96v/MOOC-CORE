@@ -61,16 +61,11 @@
         }
 
         $(function () {
+
             generar_selector();
 
-            $("#editar").on("click", function () {
-                clearTimeout(t);
-
-                $("#persona_d").html(galeriaObject[actual].persona);
-                $("#frase_d").html(galeriaObject[actual].frase);
-                $("#foto_d").html(galeriaObject[actual].foto);
-
-                $("#datos").css("display", "block");
+            $("#reset").on("click", function () {
+                confirm("Press OK to reset the carrousel!");
             })
 
             $("#nuevo").on("click", function () {
@@ -132,6 +127,9 @@
             <p id="persona"></p>
         </div>
     </section>
+    <div class="reset">
+        <button id="reset">RESET</button>
+    </div>
     <div class="editar" id="editar">
         <img src="images/carat-d-white.svg" alt=""/>
     </div>
@@ -147,6 +145,7 @@
             </ul>
         </div>
     </section>
+
 </div>
 </body>
 </html>
